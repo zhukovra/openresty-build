@@ -27,7 +27,8 @@ source_ngx_http_geoip2_module="https://github.com/leev/ngx_http_geoip2_module/ar
 # Look up latest versions of each package
 version_pcre=$(curl -sL ${source_pcre} | grep -Eo 'pcre\-[0-9.]+[0-9]' | sort -V | tail -n 1)
 version_zlib=$(curl -sL ${source_zlib} | grep -Eo 'zlib\-[0-9.]+[0-9]' | sort -V | tail -n 1)
-version_openssl=$(curl -sL ${source_openssl} | grep -Eo 'openssl\-[0-9.]+[a-z]?' | sort -V | tail -n 1)
+# version_openssl=$(curl -sL ${source_openssl} | grep -Eo 'openssl\-[0-9.]+[a-z]?' | sort -V | tail -n 1)
+version_openssl=1.1.1d
 version_nginx=openresty-1.15.8.3
 
 # Set OpenPGP keys used to sign downloads
@@ -59,7 +60,9 @@ apt-get -y install \
 # Download the source files
 curl -L "${source_pcre}${version_pcre}.tar.gz" -o "${bpath}/pcre.tar.gz"
 curl -L "${source_zlib}${version_zlib}.tar.gz" -o "${bpath}/zlib.tar.gz"
-curl -L "${source_openssl}${version_openssl}.tar.gz" -o "${bpath}/openssl.tar.gz"
+# Disable due bug https://github.com/openssl/openssl/issues/11381
+# curl -L "${source_openssl}${version_openssl}.tar.gz" -o "${bpath}/openssl.tar.gz"
+curl -L "https://www.openssl.org/source/old/1.1.1/openssl-1.1.1d.tar.gz" -o "${bpath}/openssl.tar.gz"
 curl -L "${source_nginx}${version_nginx}.tar.gz" -o "${bpath}/nginx.tar.gz"
 curl -L "${source_libmaxminddb}" -o "${bpath}/libmaxminddb.tar.gz"
 curl -L "${source_ngx_http_geoip2_module}" -o "${bpath}/ngx_http_geoip2_module.tar.gz"
@@ -67,7 +70,7 @@ curl -L "${source_ngx_http_geoip2_module}" -o "${bpath}/ngx_http_geoip2_module.t
 # Download the signature files
 curl -L "${source_pcre}${version_pcre}.tar.gz.sig" -o "${bpath}/pcre.tar.gz.sig"
 curl -L "${source_zlib}${version_zlib}.tar.gz.asc" -o "${bpath}/zlib.tar.gz.asc"
-curl -L "${source_openssl}${version_openssl}.tar.gz.asc" -o "${bpath}/openssl.tar.gz.asc"
+# curl -L "${source_openssl}${version_openssl}.tar.gz.asc" -o "${bpath}/openssl.tar.gz.asc"
 # curl -L "${source_nginx}${version_nginx}.tar.gz.asc" -o "${bpath}/nginx.tar.gz.asc"
 
 # Verify the integrity and authenticity of the source files through their OpenPGP signature
@@ -78,7 +81,7 @@ export GNUPGHOME
 || gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$opgp_pcre" "$opgp_zlib" "$opgp_openssl" "$opgp_nginx")
 gpg --batch --verify pcre.tar.gz.sig pcre.tar.gz
 gpg --batch --verify zlib.tar.gz.asc zlib.tar.gz
-gpg --batch --verify openssl.tar.gz.asc openssl.tar.gz
+# gpg --batch --verify openssl.tar.gz.asc openssl.tar.gz
 # gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz
 
 # Expand the source files
@@ -137,7 +140,7 @@ cd "$bpath/$version_nginx"
   --with-pcre="$bpath/$version_pcre" \
   --with-zlib="$bpath/$version_zlib" \
   --with-openssl-opt="no-weak-ssl-ciphers no-ssl3 no-shared $ecflag -DOPENSSL_NO_HEARTBEATS -fstack-protector-strong" \
-  --with-openssl="$bpath/$version_openssl" \
+  --with-openssl="$bpath/openssl-$version_openssl" \
   --sbin-path=/usr/sbin/nginx \
   --modules-path=/usr/lib/nginx/modules \
   --conf-path=/etc/nginx/nginx.conf \
@@ -215,3 +218,5 @@ fi
 echo "All done.";
 echo "Start with sudo systemctl start nginx"
 echo "or with sudo nginx"
+echo "---"
+nginx -V
