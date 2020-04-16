@@ -152,7 +152,6 @@ cd "$bpath/$version_nginx"
   --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
   --user=nginx \
   --group=nginx \
-  --with-ipv6 \
   --with-file-aio \
   --with-http_auth_request_module \
   --with-http_gunzip_module \
