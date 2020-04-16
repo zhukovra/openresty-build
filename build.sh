@@ -10,13 +10,14 @@ fi
 set -e -x
 
 # Ensure curl is installed
-apt-get update && apt-get install curl -y
+apt-get update && apt-get install curl git -y
 
 # Set URLs to the source directories
 source_pcre=https://ftp.pcre.org/pub/pcre/
 source_zlib=https://zlib.net/
 source_openssl=https://www.openssl.org/source/
 source_nginx=https://openresty.org/download/
+source_ngx_brotli=https://github.com/google/ngx_brotli.git
 
 version_libmaxminddb=1.3.2
 source_libmaxminddb="https://github.com/maxmind/libmaxminddb/releases/download/${version_libmaxminddb}/libmaxminddb-${version_libmaxminddb}.tar.gz"
@@ -91,6 +92,11 @@ done
 rm -rf \
   "$GNUPGHOME" \
   "$bpath"/*.tar.*
+
+# Download ngx_brotli module and deps
+git clone --depth=1 ${source_ngx_brotli} ${bpath}/ngx_brotli
+cd ${bpath}/ngx_brotli
+git submodule update --init
 
 # Build libmaxminddb
 cd "$bpath/libmaxminddb-${version_libmaxminddb}"
@@ -175,7 +181,8 @@ cd "$bpath/$version_nginx"
   --without-mail_imap_module \
   --without-mail_pop3_module \
   --without-mail_smtp_module \
-  --add-module="$bpath/ngx_http_geoip2_module-$version_ngx_http_geoip2_module"
+  --add-module="$bpath/ngx_http_geoip2_module-$version_ngx_http_geoip2_module" \
+  --add-module="$bpath/ngx_brotli"
 make
 make install
 make clean

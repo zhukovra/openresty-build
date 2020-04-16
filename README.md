@@ -2,6 +2,10 @@ Bash script for building Openresty from source.
 
 Origin script for Nginx is MatthewVance/nginx-build.
 
+### Install
+
+Create directory, cd in it. Copy build.sh and "sudo bash build.sh"
+
 ### TESTING
 
 Tested on Debian 10.
