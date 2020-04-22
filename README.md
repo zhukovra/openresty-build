@@ -1,5 +1,7 @@
 Bash script for building Openresty from source.
 
+![Build image](https://github.com/zhukovra/openresty-build/workflows/Build%20image/badge.svg)
+
 Origin script for Nginx is MatthewVance/nginx-build.
 
 ### Install
