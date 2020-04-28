@@ -28,7 +28,7 @@ source_ngx_http_geoip2_module="https://github.com/leev/ngx_http_geoip2_module/ar
 # Look up latest versions of each package
 version_pcre=$(curl -sL ${source_pcre} | grep -Eo 'pcre\-[0-9.]+[0-9]' | sort -V | tail -n 1)
 version_zlib=$(curl -sL ${source_zlib} | grep -Eo 'zlib\-[0-9.]+[0-9]' | sort -V | tail -n 1)
-version_openssl=$(curl -sL ${source_openssl} | grep -Eo 'openssl\-[0-9.]+[a-z]?' | sort -V | tail -n 1)
+version_openssl=$(curl -sL ${source_openssl} | grep -Eo 'openssl\-1[0-9.]+[a-z]?' | sort -V | tail -n 1)
 version_nginx=openresty-1.15.8.3
 
 # Set OpenPGP keys used to sign downloads
