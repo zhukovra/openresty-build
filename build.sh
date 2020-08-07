@@ -22,7 +22,7 @@ source_ngx_brotli=https://github.com/google/ngx_brotli.git
 version_libmaxminddb=1.3.2
 source_libmaxminddb="https://github.com/maxmind/libmaxminddb/releases/download/${version_libmaxminddb}/libmaxminddb-${version_libmaxminddb}.tar.gz"
 
-version_ngx_http_geoip2_module=3.2
+version_ngx_http_geoip2_module=3.3
 source_ngx_http_geoip2_module="https://github.com/leev/ngx_http_geoip2_module/archive/${version_ngx_http_geoip2_module}.tar.gz"
 
 # Look up latest versions of each package
