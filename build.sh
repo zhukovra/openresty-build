@@ -22,14 +22,14 @@ source_ngx_brotli=https://github.com/google/ngx_brotli.git
 version_libmaxminddb=1.3.2
 source_libmaxminddb="https://github.com/maxmind/libmaxminddb/releases/download/${version_libmaxminddb}/libmaxminddb-${version_libmaxminddb}.tar.gz"
 
-version_ngx_http_geoip2_module=3.2
+version_ngx_http_geoip2_module=3.3
 source_ngx_http_geoip2_module="https://github.com/leev/ngx_http_geoip2_module/archive/${version_ngx_http_geoip2_module}.tar.gz"
 
 # Look up latest versions of each package
 version_pcre=$(curl -sL ${source_pcre} | grep -Eo 'pcre\-[0-9.]+[0-9]' | sort -V | tail -n 1)
 version_zlib=$(curl -sL ${source_zlib} | grep -Eo 'zlib\-[0-9.]+[0-9]' | sort -V | tail -n 1)
 version_openssl=$(curl -sL ${source_openssl} | grep -Eo 'openssl\-1[0-9.]+[a-z]?' | sort -V | tail -n 1)
-version_nginx=openresty-1.15.8.3
+version_nginx=openresty-1.17.8.2
 
 # Set OpenPGP keys used to sign downloads
 opgp_pcre=45F68D54BBE23FB3039B46E59766E084FB0F43D8
