@@ -19,6 +19,11 @@ Test build script via docker:
 docker run --rm -i debian:10 bash < build.sh
 ```
 
+Build docker image:
+```bash
+docker build --force-rm -t IMAGE_TAG .
+```
+
 Test build script and service via Vagrant:
 
 ```bash
